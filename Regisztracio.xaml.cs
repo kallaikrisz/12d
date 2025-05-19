@@ -36,7 +36,7 @@ namespace ugyfel
                 MessageBox.Show("Töltsön ki minden mezőt!", "Hiányzó adat!" ,MessageBoxButton.OK,MessageBoxImage.Error);
                 return;
             }
-            if()
+            if(c)
         }
     }
 }
