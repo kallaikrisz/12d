@@ -34,7 +34,9 @@ namespace ugyfel
             if(string.IsNullOrEmpty(nev) || string.IsNullOrEmpty(pass))
             {
                 MessageBox.Show("Töltsön ki minden mezőt!", "Hiányzó adat!" ,MessageBoxButton.OK,MessageBoxImage.Error);
+                return;
             }
+            if()
         }
     }
 }
