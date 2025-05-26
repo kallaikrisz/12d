@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,39 @@ namespace ugyfel
                 MessageBox.Show("Töltsön ki minden mezőt!", "Hiányzó adat!" ,MessageBoxButton.OK,MessageBoxImage.Error);
                 return;
             }
-            if(c)
+            if(pass!= passujra)
+            {
+                MessageBox.Show("Nem egyeznek a jelszavak!", "Jelszó hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(!emailcim.Contains('@')|| !emailcim.Contains('.'))
+            {
+                MessageBox.Show("Nem megfelelő e-mail formátum!", "E-mail hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            try 
+            {
+                using (MySqlConnection conn = new MySql.Data.MySqlClient.MySqlConnection(App.ConnString))
+                {
+                    conn.Open();
+                    string sql = "select count(*) from felhasznalo where felhasznalo=@fnev or email=@emil";
+                    var check=new MySql.Data.MySqlClient.MySqlCommand(sql, conn);
+                    check.Parameters.AddWithValue("@fnev",nev);
+                    check.Parameters.AddWithValue("@emil", emailcim);
+                    long db=(long)check.ExecuteScalar();
+                    if (db > 0)
+                    {
+                        MessageBox.Show("Már van ilyen felhasználó vagy e-mail cím!", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba történt az adatbáziskapcsolat során:\n" + ex.Message, "Adatbázis hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
