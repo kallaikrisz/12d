@@ -59,6 +59,7 @@ namespace ugyfel
                     long db=(long)check.ExecuteScalar();
                     if (db > 0)
                     {
+
                         MessageBox.Show("Már van ilyen felhasználó vagy e-mail cím!", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
